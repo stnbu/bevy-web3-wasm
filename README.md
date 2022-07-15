@@ -29,9 +29,9 @@ What I expect to happen:
 
 Clicking the `[metamask]` button causes `interface.sender` to queue up the string `"eth_requestAccounts"` in the task that contains the `Eip1193Task` instance that lives in the `IoTaskPool.task`.
 
-[Here](https://github.com/stnbu/bevy-web3-wasm/blob/88aaa8b71c2813a27181bff2d4066f0f2130fb2d/src/main.rs#L46) we `recv` from `Eip1193Task.receiver` and calls `.execute()` on the eip-1193 transport.
+[Here](https://github.com/stnbu/bevy-web3-wasm/blob/88aaa8b71c2813a27181bff2d4066f0f2130fb2d/src/main.rs#L46) we `recv` from `Eip1193Task.receiver` and call `.execute()` on the eip-1193 transport.
 
-If `Ok(response)`, then `response` is stringified and sent to `Eip1193Interface.receiver` which should be received [here](https://github.com/stnbu/bevy-web3-wasm/blob/88aaa8b71c2813a27181bff2d4066f0f2130fb2d/src/main.rs#L116) `ui_example` is called once per frame; egui is ["immediate mode"](https://en.wikipedia.org/wiki/Immediate_mode_GUI).
+If `Ok(response)` (`.await` completed and returned a value) then `response` is stringified and sent to `Eip1193Interface.receiver` which should be received [here](https://github.com/stnbu/bevy-web3-wasm/blob/88aaa8b71c2813a27181bff2d4066f0f2130fb2d/src/main.rs#L116) `ui_example` is called once per frame; egui is ["immediate mode"](https://en.wikipedia.org/wiki/Immediate_mode_GUI).
 
 ----
 
