@@ -1,0 +1,6 @@
+# https://github.com/brotzeit/rustic/issues/389
+# You can do this in emacs:
+#   (setq rustic-rustfmt-args "--edition=2021")
+# Or you can do the below:
+
+edition = "2021"
