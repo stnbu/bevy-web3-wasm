@@ -42,26 +42,24 @@ impl Eip1193Task {
         let sender = self.sender.clone();
 
         let task = task_pool.spawn(async move {
-            loop {
-                match receiver.try_recv() {
-                    Ok(message) => match transport.execute(&message, vec![]).await {
-                        Ok(response) => {
-                            match sender.try_send(response.to_string()) {
-                                Ok(()) => {
-                                    mbutils::console_log!("Successfully sent message.")
-                                }
-                                Err(err) => {
-                                    mbutils::console_log!("Failed to send message: {}", err)
-                                }
-                            };
-                        }
-                        Err(err) => {
-                            mbutils::console_log!("Failed execute web3 call: {}", err)
-                        }
-                    },
-                    Err(err) => {
-                        mbutils::console_log!("Failed to receive web3 api call: {}", err)
+            match receiver.try_recv() {
+                Ok(message) => match transport.execute(&message, vec![]).await {
+                    Ok(response) => {
+                        match sender.try_send(response.to_string()) {
+                            Ok(()) => {
+                                mbutils::console_log!("Successfully sent message.")
+                            }
+                            Err(err) => {
+                                mbutils::console_log!("Failed to send message: {}", err)
+                            }
+                        };
                     }
+                    Err(err) => {
+                        mbutils::console_log!("Failed execute web3 call: {}", err)
+                    }
+                },
+                Err(err) => {
+                    mbutils::console_log!("Failed to receive web3 api call: {}", err)
                 }
             }
         });
