@@ -18,3 +18,7 @@ web3 = { version = "0.18.0", features = [
   "eip-1193",
 ], default-features = false }
 mbutils = { git = "https://github.com/stnbu/mbutil.git" }
+
+[[bin]]
+name = "index" # index.wasm (a la index.js, index.ts, index.html...)
+path = "src/main.rs"
